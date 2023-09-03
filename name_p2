@@ -1,63 +1,54 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
 int main() {
-    char first_name[] = "Nicholas";
-    char last_name[] = "Bennings";
+    // Read Matrices A and B from files
+    ifstream fileA("nbennings_mat1.txt");
+    ifstream fileB("nbennings_mat2.txt");
 
-    int rows = strlen(last_name);
-    int columns = strlen(first_name);
-
-    int mat1[rows][columns];
-    int mat2[rows][columns];
-
-    // Read Mat1 and Mat2 from files
-    FILE *file1 = fopen("nbennings_mat1.txt", "r");
-    FILE *file2 = fopen("nbennings_mat2.txt", "r");
-
-    if (file1 == NULL || file2 == NULL) {
-        printf("Error opening input files.");
+    if (!fileA || !fileB) {
+        cerr << "Error opening input files." << endl;
         return 1;
     }
 
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            if (fscanf(file1, "%d", &mat1[i][j]) != 1 || fscanf(file2, "%d", &mat2[i][j]) != 1) {
-                printf("Error reading input files.");
-                fclose(file1);
-                fclose(file2);
-                return 1;
-            }
-        }
-    }
-
-    fclose(file1);
-    fclose(file2);
-
-    // Perform matrix addition (Mat1 + Mat2)
-    int result[rows][columns];
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            result[i][j] = mat1[i][j] + mat2[i][j];
-        }
-    }
-
-    // Write result to file
-    FILE *output_file = fopen("name_p2_out12.txt", "w");
-    if (output_file == NULL) {
-        printf("Error opening output file.");
-        return 1;
-    }
+    int rows, columns;
+    fileA >> rows >> columns;
+    int matA[100][100];
+    int matB[100][100];
 
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            fprintf(output_file, "%d ", result[i][j]);
+            fileA >> matA[i][j];
+            fileB >> matB[i][j];
         }
-        fprintf(output_file, "\n");
     }
 
-    fclose(output_file);
+    fileA.close();
+    fileB.close();
+
+    // Add Matrices A and B to get MatC
+    int matC[100][100];
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            matC[i][j] = matA[i][j] + matB[i][j];
+        }
+    }
+
+    // Write MatC to a file
+    ofstream outfile("nbennings_p2_out12.txt");
+    outfile << rows << " " << columns << endl;
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            outfile << matC[i][j] << " ";
+        }
+        outfile << endl;
+    }
+
+    outfile.close();
 
     return 0;
 }

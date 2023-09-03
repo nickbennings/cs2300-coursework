@@ -1,105 +1,38 @@
-#include <stdio.h>
-#include <string.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
 int main() {
-    char first_name[] = "Nicholas";
-    char last_name[] = "Bennings";
+    string first_name = "Nicholas";
+    string last_name = "Bennings";
 
-    int rows = strlen(last_name);
-    int columns = strlen(first_name);
+    int rows = last_name.length();
+    int columns = first_name.length();
 
-    int mat1[rows][columns];
-    int mat2[rows][columns];
-    int mat3[2][4];
-    int mat4[4][2];
+    int mat1[100][100];
+
+    int counter = 1;
 
     // Fill Mat1
-    int value = 1;
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            mat1[i][j] = value++;
+            mat1[i][j] = counter++;
         }
     }
 
-    // Fill Mat2
-    value = 2;
+    // Write Mat1 to a file
+    ofstream outfile("nbennings_mat1.txt");
+    outfile << rows << " " << columns << endl;
+
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            mat2[i][j] = value;
-            value += 3;
+            outfile << mat1[i][j] << " ";
         }
+        outfile << endl;
     }
 
-    // Fill Mat3
-    value = 10;
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 4; j++) {
-            mat3[i][j] = value;
-            value -= 2;
-        }
-    }
-
-    // Fill Mat4
-    value = -6;
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 2; j++) {
-            mat4[i][j] = value;
-            value += 1.5;
-        }
-    }
-
-    // Write Matrices to Files
-    FILE *file1 = fopen("nbennings_mat1.txt", "w");
-    if (file1 == NULL) {
-        printf("Error opening file for Mat1.");
-        return 1;
-    }
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            fprintf(file1, "%d ", mat1[i][j]);
-        }
-        fprintf(file1, "\n");
-    }
-    fclose(file1);
-
-    FILE *file2 = fopen("nbennings_mat2.txt", "w");
-    if (file2 == NULL) {
-        printf("Error opening file for Mat2.");
-        return 1;
-    }
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            fprintf(file2, "%d ", mat2[i][j]);
-        }
-        fprintf(file2, "\n");
-    }
-    fclose(file2);
-
-    FILE *file3 = fopen("nbennings_mat3.txt", "w");
-    if (file3 == NULL) {
-        printf("Error opening file for Mat3.");
-        return 1;
-    }
-    for (int i = 0; i < 2; i++) {
-        for (int j = 0; j < 4; j++) {
-            fprintf(file3, "%d ", mat3[i][j]);
-        }
-        fprintf(file3, "\n");
-    }
-    fclose(file3);
-
-    FILE *file4 = fopen("nbennings_mat4.txt", "w");
-    if (file4 == NULL) {
-        printf("Error opening file for Mat4.");
-        return 1;
-    }
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 2; j++) {
-            fprintf(file4, "%.2f ", (float)mat4[i][j]);
-        }
-        fprintf(file4, "\n");
-    }
-    fclose(file4);
+    outfile.close();
 
     return 0;
 }

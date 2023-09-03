@@ -1,0 +1,156 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char first_name[] = "Nicholas";
+    char last_name[] = "Bennings";
+
+    int rows = strlen(last_name);
+    int columns = strlen(first_name);
+
+    int mat1[rows][columns];
+    int mat2[rows][columns];
+    int mat3[2][4];
+    int mat4[4][2];
+
+    // Read Matrices from Files
+    FILE *file1 = fopen("nbennings_mat1.txt", "r");
+    FILE *file2 = fopen("nbennings_mat2.txt", "r");
+    FILE *file3 = fopen("nbennings_mat3.txt", "r");
+    FILE *file4 = fopen("nbennings_mat4.txt", "r");
+
+    if (file1 == NULL || file2 == NULL || file3 == NULL || file4 == NULL) {
+        printf("Error opening input files.");
+        return 1;
+    }
+
+    // Read Mat1
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            if (fscanf(file1, "%d", &mat1[i][j]) != 1) {
+                printf("Error reading Mat1 from input file.");
+                fclose(file1);
+                fclose(file2);
+                fclose(file3);
+                fclose(file4);
+                return 1;
+            }
+        }
+    }
+
+    // Read Mat2
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            if (fscanf(file2, "%d", &mat2[i][j]) != 1) {
+                printf("Error reading Mat2 from input file.");
+                fclose(file1);
+                fclose(file2);
+                fclose(file3);
+                fclose(file4);
+                return 1;
+            }
+        }
+    }
+
+    // Read Mat3
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (fscanf(file3, "%d", &mat3[i][j]) != 1) {
+                printf("Error reading Mat3 from input file.");
+                fclose(file1);
+                fclose(file2);
+                fclose(file3);
+                fclose(file4);
+                return 1;
+            }
+        }
+    }
+
+    // Read Mat4
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 2; j++) {
+            if (fscanf(file4, "%d", &mat4[i][j]) != 1) {
+                printf("Error reading Mat4 from input file.");
+                fclose(file1);
+                fclose(file2);
+                fclose(file3);
+                fclose(file4);
+                return 1;
+            }
+        }
+    }
+
+    fclose(file1);
+    fclose(file2);
+    fclose(file3);
+    fclose(file4);
+
+    // Transpose Matrices
+    int mat1_transpose[columns][rows];
+    int mat2_transpose[columns][rows];
+    int mat3_transpose[4][2];
+    int mat4_transpose[2][4];
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            mat1_transpose[j][i] = mat1[i][j];
+            mat2_transpose[j][i] = mat2[i][j];
+        }
+    }
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 4; j++) {
+            mat3_transpose[j][i] = mat3[i][j];
+            mat4_transpose[i][j] = mat4[j][i];
+        }
+    }
+
+    // Write Transposed Matrices to Files
+    FILE *file1_transpose = fopen("name_p6_mat1.txt", "w");
+    FILE *file2_transpose = fopen("name_p6_mat2.txt", "w");
+    FILE *file3_transpose = fopen("name_p6_mat3.txt", "w");
+    FILE *file4_transpose = fopen("name_p6_mat4.txt", "w");
+
+    if (file1_transpose == NULL || file2_transpose == NULL || file3_transpose == NULL || file4_transpose == NULL) {
+        printf("Error opening output files for transposed matrices.");
+        return 1;
+    }
+
+    // Write Mat1 Transpose
+    for (int i = 0; i < columns; i++) {
+        for (int j = 0; j < rows; j++) {
+            fprintf(file1_transpose, "%d ", mat1_transpose[i][j]);
+        }
+        fprintf(file1_transpose, "\n");
+    }
+    fclose(file1_transpose);
+
+    // Write Mat2 Transpose
+    for (int i = 0; i < columns; i++) {
+        for (int j = 0; j < rows; j++) {
+            fprintf(file2_transpose, "%d ", mat2_transpose[i][j]);
+        }
+        fprintf(file2_transpose, "\n");
+    }
+    fclose(file2_transpose);
+
+    // Write Mat3 Transpose
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 2; j++) {
+            fprintf(file3_transpose, "%d ", mat3_transpose[i][j]);
+        }
+        fprintf(file3_transpose, "\n");
+    }
+    fclose(file3_transpose);
+
+    // Write Mat4 Transpose
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 4; j++) {
+            fprintf(file4_transpose, "%d ", mat4_transpose[i][j]);
+        }
+        fprintf(file4_transpose, "\n");
+    }
+    fclose(file4_transpose);
+
+    return 0;
+}

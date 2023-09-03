@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    char first_name[] = "Nicholas";
+    char last_name[] = "Bennings";
+
+    int rows = strlen(last_name);
+    int columns = strlen(first_name);
+
+    int mat1[rows][columns];
+    int mat2[rows][columns];
+
+    // Read Mat1 and Mat2 from files
+    FILE *file1 = fopen("nbennings_mat1.txt", "r");
+    FILE *file2 = fopen("nbennings_mat2.txt", "r");
+
+    if (file1 == NULL || file2 == NULL) {
+        printf("Error opening input files.");
+        return 1;
+    }
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            if (fscanf(file1, "%d", &mat1[i][j]) != 1 || fscanf(file2, "%d", &mat2[i][j]) != 1) {
+                printf("Error reading input files.");
+                fclose(file1);
+                fclose(file2);
+                return 1;
+            }
+        }
+    }
+
+    fclose(file1);
+    fclose(file2);
+
+    // Perform matrix addition (Mat1 + Mat2)
+    int result[rows][columns];
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            result[i][j] = mat1[i][j] + mat2[i][j];
+        }
+    }
+
+    // Write result to file
+    FILE *output_file = fopen("name_p2_out12.txt", "w");
+    if (output_file == NULL) {
+        printf("Error opening output file.");
+        return 1;
+    }
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            fprintf(output_file, "%d ", result[i][j]);
+        }
+        fprintf(output_file, "\n");
+    }
+
+    fclose(output_file);
+
+    return 0;
+}

@@ -1,66 +1,60 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
 int main() {
-    char first_name[] = "Nicholas";
-    char last_name[] = "Bennings";
+    // Read Matrices A and B from files
+    ifstream fileA("nbennings_mat1.txt");
+    ifstream fileB("nbennings_mat2.txt");
 
-    int rows = strlen(last_name);
-    int columns = strlen(first_name);
-
-    int mat1[rows][columns];
-    int mat2[rows][columns];
-
-    // Read Mat1 and Mat2 from files
-    FILE *file1 = fopen("nbennings_mat1.txt", "r");
-    FILE *file2 = fopen("nbennings_mat2.txt", "r");
-
-    if (file1 == NULL || file2 == NULL) {
-        printf("Error opening input files.");
+    if (!fileA || !fileB) {
+        cerr << "Error opening input files." << endl;
         return 1;
     }
 
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            if (fscanf(file1, "%d", &mat1[i][j]) != 1 || fscanf(file2, "%d", &mat2[i][j]) != 1) {
-                printf("Error reading input files.");
-                fclose(file1);
-                fclose(file2);
-                return 1;
+    int rowsA, columnsA, rowsB, columnsB;
+    fileA >> rowsA >> columnsA;
+    fileB >> rowsB >> columnsB;
+
+    if (columnsA != rowsB) {
+        cerr << "Matrix dimensions are incompatible for multiplication." << endl;
+        return 1;
+    }
+
+    int matA[100][100];
+    int matB[100][100];
+
+    for (int i = 0; i < rowsA; i++) {
+        for (int j = 0; j < columnsA; j++) {
+            fileA >> matA[i][j];
+        }
+    }
+
+    for (int i = 0; i < rowsB; i++) {
+        for (int j = 0; j < columnsB; j++) {
+            fileB >> matB[i][j];
+        }
+    }
+
+    fileA.close();
+    fileB.close();
+
+    // Multiply Matrices A and B to get MatC
+    int matC[100][100];
+
+    for (int i = 0; i < rowsA; i++) {
+        for (int j = 0; j < columnsB; j++) {
+            matC[i][j] = 0;
+            for (int k = 0; k < columnsA; k++) {
+                matC[i][j] += matA[i][k] * matB[k][j];
             }
         }
     }
 
-    fclose(file1);
-    fclose(file2);
+    // Write MatC to a file
+    ofstream outfile("nbennings_p3_out12.txt");
+    outfile << rowsA << " " << columnsB << endl;
 
-    // Perform matrix multiplication (Mat1 * Mat2)
-    int result[rows][columns];
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            result[i][j] = 0;
-            for (int k = 0; k < columns; k++) {
-                result[i][j] += mat1[i][k] * mat2[k][j];
-            }
-        }
-    }
-
-    // Write result to file
-    FILE *output_file = fopen("name_p3_out12.txt", "w");
-    if (output_file == NULL) {
-        printf("Error opening output file.");
-        return 1;
-    }
-
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            fprintf(output_file, "%d ", result[i][j]);
-        }
-        fprintf(output_file, "\n");
-    }
-
-    fclose(output_file);
-
-    return 0;
-}
+    for (int i = 0; i < rowsA; i++) {
+        for (int

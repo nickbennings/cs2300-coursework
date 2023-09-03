@@ -1,39 +1,20 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <iostream>
+#include <Eigen/Dense>
 
 int main() {
-    char vectors[] = "r s u v w";
+    Eigen::Vector2d r;
+    Eigen::Vector2d s;
+    Eigen::Vector2d u;
+    Eigen::Vector2d v;
+    Eigen::Vector2d w;
 
-    int r[] = {-1, -2};
-    int s[] = {-3, 3};
-    int u[] = {2, -1};
-    int v[] = {3, 1};
-    int w[] = {1, 3};
+    // Initialize vectors r, s, u, v, and w
 
-    int num_vectors = 5;
+    double dot_product_rs = r.dot(s);
+    double dot_product_uv = u.dot(v);
 
-    // Calculate dot products and write to files
-    for (int i = 0; i < num_vectors; i++) {
-        for (int j = i + 1; j < num_vectors; j++) {
-            int result = 0;
-            for (int k = 0; k < 2; k++) {
-                result += vectors[i * 3 + k] * vectors[j * 3 + k];
-            }
-
-            char output_filename[20];
-            sprintf(output_filename, "name_p5_out%c%c.txt", vectors[i * 3], vectors[j * 3]);
-
-            FILE *output_file = fopen(output_filename, "w");
-            if (output_file == NULL) {
-                printf("Error opening output file %s.", output_filename);
-                return 1;
-            }
-
-            fprintf(output_file, "%d\n", result);
-            fclose(output_file);
-        }
-    }
+    std::cout << "Dot Product of r and s: " << dot_product_rs << std::endl;
+    std::cout << "Dot Product of u and v: " << dot_product_uv << std::endl;
 
     return 0;
 }

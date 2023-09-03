@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <gsl/gsl_matrix.h>
+#include <gsl/gsl_blas.h>
+
+int main() {
+    char first_name[] = "Nicholas";
+    char last_name[] = "Bennings";
+
+    int rows = strlen(last_name);
+    int columns = strlen(first_name);
+
+    // Read Mat1 and Mat2 from files
+    FILE *file1 = fopen("nbennings_mat1.txt", "r");
+    FILE *file2 = fopen("nbennings_mat2.txt", "r");
+
+    if (file1 == NULL || file2 == NULL) {
+        printf("Error opening input files.");
+        return 1;
+    }
+
+    gsl_matrix *mat1 = gsl_matrix_alloc(rows, columns);
+    gsl_matrix *mat2 = gsl_matrix_alloc(rows, columns);
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            int value1, value2;
+            if (fscanf(file1, "%d", &value1) != 1 || fscanf(file2, "%d", &value2) != 1) {
+                printf("Error reading input files.");
+                fclose(file1);
+                fclose(file2);
+                gsl_matrix_free(mat1);
+                gsl_matrix_free(mat2);
+                return 1;
+            }
+            gsl_matrix_set(mat1, i, j, (double)value1);
+            gsl_matrix_set(mat2, i, j, (double)value2);
+        }
+    }
+
+    fclose(file1);
+    fclose(file2);
+
+    // Perform matrix addition (Mat1 + Mat2) using GSL
+    gsl_matrix *result_add = gsl_matrix_alloc(rows, columns);
+    gsl_matrix_add(result_add, mat1, mat2);
+
+    // Write result to file
+    FILE *output_file_add = fopen("name_p4_outA12.txt", "w");
+    if (output_file_add == NULL) {
+        printf("Error opening output file for addition.");
+        gsl_matrix_free(mat1);
+        gsl_matrix_free(mat2);
+        gsl_matrix_free(result_add);
+        return 1;
+    }
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            fprintf(output_file_add, "%.2f ", gsl_matrix_get(result_add, i, j));
+        }
+        fprintf(output_file_add, "\n");
+    }
+
+    fclose(output_file_add);
+
+    // Perform matrix multiplication (Mat1 * Mat2) using GSL
+    gsl_matrix *result_mult = gsl_matrix_alloc(rows, columns);
+    gsl_blas_dgemm(CblasNoTrans, CblasNoTrans, 1.0, mat1, mat2, 0.0, result_mult);
+
+    // Write result to file
+    FILE *output_file_mult = fopen("name_p4_outM12.txt", "w");
+    if (output_file_mult == NULL) {
+        printf("Error opening output file for multiplication.");
+        gsl_matrix_free(mat1);
+        gsl_matrix_free(mat2);
+        gsl_matrix_free(result_add);
+        gsl_matrix_free(result_mult);
+        return 1;
+    }
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < columns; j++) {
+            fprintf(output_file_mult, "%.2f ", gsl_matrix_get(result_mult, i, j));
+        }
+        fprintf(output_file_mult, "\n");
+    }
+
+    fclose(output_file_mult);
+
+    gsl_matrix_free(mat1);
+    gsl_matrix_free(mat2);
+    gsl_matrix_free(result_add);
+    gsl_matrix_free(result_mult);
+
+    return 0;
+}

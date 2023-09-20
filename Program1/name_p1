@@ -1,0 +1,119 @@
+// name_p1
+using System;
+using System.IO;
+
+namespace MatrixAlgebraAssignment.name_p1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string firstName = "YourFirstName";  // Replace with first name
+            string lastName = "YourLastName";  // Replace with last name
+
+            int numberOfLettersInFirstName = firstName.Length;
+            int numberOfLettersInLastName = lastName.Length;
+
+            Console.WriteLine($"{firstName} = {numberOfLettersInFirstName}");
+            Console.WriteLine($"{lastName} = {numberOfLettersInLastName}");
+
+            int[,] mat1 = GenerateMatrix1(numberOfLettersInLastName, numberOfLettersInFirstName);
+            int[,] mat2 = GenerateMatrix2(numberOfLettersInLastName, numberOfLettersInFirstName);
+            int[,] mat3 = GenerateMatrix3();
+            int[,] mat4 = GenerateMatrix4();
+
+            WriteMatrixToFile(mat1, "name_mat1.txt");
+            WriteMatrixToFile(mat2, "name_mat2.txt");
+            WriteMatrixToFile(mat3, "name_mat3.txt");
+            WriteMatrixToFile(mat4, "name_mat4.txt");
+
+            Console.WriteLine("Matrices generated and saved to files.");
+        }
+
+        private static int[,] GenerateMatrix1(int rows, int columns)
+        {
+            int[,] matrix = new int[rows, columns];
+            int value = 1;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = value;
+                    value++;
+                }
+            }
+
+            return matrix;
+        }
+
+        private static int[,] GenerateMatrix2(int rows, int columns)
+        {
+            int[,] matrix = new int[rows, columns];
+            int value = 2;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    matrix[i, j] = value;
+                    value += 3;
+                }
+            }
+
+            return matrix;
+        }
+
+        private static int[,] GenerateMatrix3()
+        {
+            int[,] matrix = new int[2, 4];
+            int value = 10;
+
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    matrix[i, j] = value;
+                    value -= 2;
+                }
+            }
+
+            return matrix;
+        }
+
+        private static int[,] GenerateMatrix4()
+        {
+            int[,] matrix = new int[4, 2];
+            double value = -6;
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    matrix[i, j] = (int)value;
+                    value += 1.5;
+                }
+            }
+
+            return matrix;
+        }
+
+        private static void WriteMatrixToFile(int[,] matrix, string fileName)
+        {
+            using (StreamWriter writer = new StreamWriter(fileName))
+            {
+                int rows = matrix.GetLength(0);
+                int columns = matrix.GetLength(1);
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        writer.Write(matrix[i, j] + " ");
+                    }
+                    writer.WriteLine();
+                }
+            }
+        }
+    }
+}

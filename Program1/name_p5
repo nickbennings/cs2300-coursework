@@ -1,0 +1,99 @@
+// name_p5
+using System;
+using System.IO;
+
+namespace MatrixAlgebraAssignment.name_p5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Choose two vectors to calculate the dot product (r, s, u, v, w). Enter the letters separated by a space (e.g., r s): ");
+            string[] chosenVectors = Console.ReadLine().Split(' ');
+
+            Console.WriteLine("Enter the output file name for the dot product result (e.g., prussell_p5_outrs.txt): ");
+            string outputDotProductFile = Console.ReadLine();
+
+            CalculateDotProduct(chosenVectors, outputDotProductFile);
+
+            Console.WriteLine("Dot product calculation completed and saved to " + outputDotProductFile);
+        }
+
+        private static void CalculateDotProduct(string[] chosenVectors, string outputFile)
+        {
+            if (chosenVectors.Length != 2)
+            {
+                Console.WriteLine("Error: You must choose exactly two vectors for dot product calculation.");
+                return;
+            }
+
+            int[,] vectors = new int[2, 2];
+
+            for (int i = 0; i < 2; i++)
+            {
+                string vectorFile = chosenVectors[i] + ".txt";
+                int[] vectorValues = ReadVectorFromFile(vectorFile);
+
+                if (vectorValues == null)
+                {
+                    Console.WriteLine("Error: Unable to read vector " + chosenVectors[i]);
+                    return;
+                }
+
+                for (int j = 0; j < 2; j++)
+                {
+                    vectors[i, j] = vectorValues[j];
+                }
+            }
+
+            int dotProduct = CalculateDotProduct(vectors);
+
+            using (StreamWriter writer = new StreamWriter(outputFile))
+            {
+                writer.Write(dotProduct);
+            }
+        }
+
+        private static int[] ReadVectorFromFile(string fileName)
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(fileName);
+
+                if (lines.Length != 1)
+                    throw new Exception("Invalid vector file format.");
+
+                string[] values = lines[0].Split(' ');
+
+                if (values.Length != 2)
+                    throw new Exception("Invalid vector file format.");
+
+                int[] vector = new int[2];
+
+                for (int i = 0; i < 2; i++)
+                {
+                    vector[i] = int.Parse(values[i]);
+                }
+
+                return vector;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return null;
+            }
+        }
+
+        private static int CalculateDotProduct(int[,] vectors)
+        {
+            int dotProduct = 0;
+
+            for (int i = 0; i < 2; i++)
+            {
+                dotProduct += vectors[0, i] * vectors[1, i];
+            }
+
+            return dotProduct;
+        }
+    }
+}

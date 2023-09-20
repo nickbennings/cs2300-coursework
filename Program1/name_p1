@@ -1,4 +1,3 @@
-// name_p1
 using System;
 using System.IO;
 
@@ -8,24 +7,32 @@ namespace MatrixAlgebraAssignment.name_p1
     {
         static void Main(string[] args)
         {
-            string firstName = "YourFirstName";  // Replace with first name
-            string lastName = "YourLastName";  // Replace with last name
+            string firstName = "YourFirstName"; // Update this with your first name
+            string lastName = "YourLastName"; // Update this with your last name
 
-            int numberOfLettersInFirstName = firstName.Length;
-            int numberOfLettersInLastName = lastName.Length;
+            Console.WriteLine(firstName + " = " + firstName.Length);
+            Console.WriteLine(lastName + " = " + lastName.Length);
 
-            Console.WriteLine($"{firstName} = {numberOfLettersInFirstName}");
-            Console.WriteLine($"{lastName} = {numberOfLettersInLastName}");
-
-            int[,] mat1 = GenerateMatrix1(numberOfLettersInLastName, numberOfLettersInFirstName);
-            int[,] mat2 = GenerateMatrix2(numberOfLettersInLastName, numberOfLettersInFirstName);
+            int[,] mat1 = GenerateMatrix1(lastName.Length, firstName.Length);
+            int[,] mat2 = GenerateMatrix2(lastName.Length, firstName.Length);
             int[,] mat3 = GenerateMatrix3();
             int[,] mat4 = GenerateMatrix4();
 
-            WriteMatrixToFile(mat1, "name_mat1.txt");
-            WriteMatrixToFile(mat2, "name_mat2.txt");
-            WriteMatrixToFile(mat3, "name_mat3.txt");
-            WriteMatrixToFile(mat4, "name_mat4.txt");
+            Console.WriteLine("Mat1:");
+            PrintMatrix(mat1);
+            SaveMatrixToFile(mat1, "name_mat1.txt");
+
+            Console.WriteLine("Mat2:");
+            PrintMatrix(mat2);
+            SaveMatrixToFile(mat2, "name_mat2.txt");
+
+            Console.WriteLine("Mat3:");
+            PrintMatrix(mat3);
+            SaveMatrixToFile(mat3, "name_mat3.txt");
+
+            Console.WriteLine("Mat4:");
+            PrintMatrix(mat4);
+            SaveMatrixToFile(mat4, "name_mat4.txt");
 
             Console.WriteLine("Matrices generated and saved to files.");
         }
@@ -98,7 +105,22 @@ namespace MatrixAlgebraAssignment.name_p1
             return matrix;
         }
 
-        private static void WriteMatrixToFile(int[,] matrix, string fileName)
+        private static void PrintMatrix(int[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int columns = matrix.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    Console.Write(matrix[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        private static void SaveMatrixToFile(int[,] matrix, string fileName)
         {
             using (StreamWriter writer = new StreamWriter(fileName))
             {

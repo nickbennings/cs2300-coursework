@@ -1,0 +1,138 @@
+// name_p4
+using System;
+using System.IO;
+
+namespace MatrixAlgebraAssignment.name_p4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Enter the input file for the first matrix (e.g., prussell_mat1.txt): ");
+            string matrixFile1 = Console.ReadLine();
+
+            Console.WriteLine("Enter the input file for the second matrix (e.g., prussell_mat2.txt): ");
+            string matrixFile2 = Console.ReadLine();
+
+            Console.WriteLine("Enter the output file name for the addition result (e.g., prussell_p4_outA12.txt): ");
+            string outputAdditionFile = Console.ReadLine();
+
+            Console.WriteLine("Enter the output file name for the multiplication result (e.g., prussell_p4_outM12.txt): ");
+            string outputMultiplicationFile = Console.ReadLine();
+
+            PerformMatrixOperations(matrixFile1, matrixFile2, outputAdditionFile, outputMultiplicationFile);
+
+            Console.WriteLine("Matrix operations completed and saved to the respective output files.");
+        }
+
+        private static void PerformMatrixOperations(string inputFile1, string inputFile2, string outputAdditionFile, string outputMultiplicationFile)
+        {
+            int[,] matrix1 = ReadMatrixFromFile(inputFile1);
+            int[,] matrix2 = ReadMatrixFromFile(inputFile2);
+
+            if (matrix1 == null || matrix2 == null)
+            {
+                Console.WriteLine("Error: Unable to read input matrices.");
+                return;
+            }
+
+            if (matrix1.GetLength(0) != matrix2.GetLength(0) || matrix1.GetLength(1) != matrix2.GetLength(1))
+            {
+                Console.WriteLine("Error: Matrices must have the same dimensions for addition and multiplication.");
+                return;
+            }
+
+            int[,] additionResult = AddMatrices(matrix1, matrix2);
+            int[,] multiplicationResult = MultiplyMatrices(matrix1, matrix2);
+
+            WriteMatrixToFile(additionResult, outputAdditionFile);
+            WriteMatrixToFile(multiplicationResult, outputMultiplicationFile);
+        }
+
+        private static int[,] AddMatrices(int[,] matrix1, int[,] matrix2)
+        {
+            int rows = matrix1.GetLength(0);
+            int columns = matrix1.GetLength(1);
+
+            int[,] result = new int[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    result[i, j] = matrix1[i, j] + matrix2[i, j];
+                }
+            }
+
+            return result;
+        }
+
+        private static int[,] MultiplyMatrices(int[,] matrix1, int[,] matrix2)
+        {
+            int rows1 = matrix1.GetLength(0);
+            int cols1 = matrix1.GetLength(1);
+            int cols2 = matrix2.GetLength(1);
+
+            int[,] result = new int[rows1, cols2];
+
+            for (int i = 0; i < rows1; i++)
+            {
+                for (int j = 0; j < cols2; j++)
+                {
+                    for (int k = 0; k < cols1; k++)
+                    {
+                        result[i, j] += matrix1[i, k] * matrix2[k, j];
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private static int[,] ReadMatrixFromFile(string fileName)
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(fileName);
+                int rows = lines.Length;
+                int columns = lines[0].Split(' ').Length;
+                int[,] matrix = new int[rows, columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    string[] values = lines[i].Split(' ');
+
+                    for (int j = 0; j < columns; j++)
+                    {
+                        matrix[i, j] = int.Parse(values[j]);
+                    }
+                }
+
+                return matrix;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return null;
+            }
+        }
+
+        private static void WriteMatrixToFile(int[,] matrix, string fileName)
+        {
+            using (StreamWriter writer = new StreamWriter(fileName))
+            {
+                int rows = matrix.GetLength(0);
+                int columns = matrix.GetLength(1);
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        writer.Write(matrix[i, j] + " ");
+                    }
+                    writer.WriteLine();
+                }
+            }
+        }
+    }
+}

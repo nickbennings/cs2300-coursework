@@ -1,0 +1,5 @@
+1. Prompt the user for the names of the input matrices.
+2. Read the input matrices from the specified files.
+3. Perform matrix multiplication.
+4. Save the result matrix to a file.
+5. Display a message indicating the multiplication is complete.

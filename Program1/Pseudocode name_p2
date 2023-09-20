@@ -1,3 +1,4 @@
+Pseudocode name_p2
 1. Prompt the user for the names of the input matrices/
 2. Read the input matrices from the specified files.
 3. Perform element-wise addition of the matrices.

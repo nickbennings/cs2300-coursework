@@ -1,0 +1,92 @@
+// name_p6
+using System;
+using System.IO;
+
+namespace MatrixAlgebraAssignment.name_p6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            for (int i = 1; i <= 4; i++)
+            {
+                string matrixFile = "name_mat" + i + ".txt";
+                string outputTransposedFile = "name_p6_mat" + i + ".txt";
+                TransposeMatrix(matrixFile, outputTransposedFile);
+                Console.WriteLine("Matrix " + i + " transposed and saved to " + outputTransposedFile);
+            }
+        }
+
+        private static void TransposeMatrix(string inputFile, string outputFile)
+        {
+            int[,] matrix = ReadMatrixFromFile(inputFile);
+
+            if (matrix == null)
+            {
+                Console.WriteLine("Error: Unable to read the matrix.");
+                return;
+            }
+
+            int rows = matrix.GetLength(0);
+            int columns = matrix.GetLength(1);
+
+            int[,] transposedMatrix = new int[columns, rows];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    transposedMatrix[j, i] = matrix[i, j];
+                }
+            }
+
+            WriteMatrixToFile(transposedMatrix, outputFile);
+        }
+
+        private static int[,] ReadMatrixFromFile(string fileName)
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(fileName);
+                int rows = lines.Length;
+                int columns = lines[0].Split(' ').Length;
+                int[,] matrix = new int[rows, columns];
+
+                for (int i = 0; i < rows; i++)
+                {
+                    string[] values = lines[i].Split(' ');
+
+                    for (int j = 0; j < columns; j++)
+                    {
+                        matrix[i, j] = int.Parse(values[j]);
+                    }
+                }
+
+                return matrix;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return null;
+            }
+        }
+
+        private static void WriteMatrixToFile(int[,] matrix, string fileName)
+        {
+            using (StreamWriter writer = new StreamWriter(fileName))
+            {
+                int rows = matrix.GetLength(0);
+                int columns = matrix.GetLength(1);
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        writer.Write(matrix[i, j] + " ");
+                    }
+                    writer.WriteLine();
+                }
+            }
+        }
+    }
+}

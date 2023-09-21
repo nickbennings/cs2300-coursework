@@ -8,16 +8,16 @@ namespace MatrixAlgebraAssignment.name_p4
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Enter the input file for the first matrix (e.g., prussell_mat1.txt): ");
+            Console.WriteLine("Enter the input file for the first matrix");
             string matrixFile1 = Console.ReadLine();
 
-            Console.WriteLine("Enter the input file for the second matrix (e.g., prussell_mat2.txt): ");
+            Console.WriteLine("Enter the input file for the second matrix");
             string matrixFile2 = Console.ReadLine();
 
-            Console.WriteLine("Enter the output file name for the addition result (e.g., prussell_p4_outA12.txt): ");
+            Console.WriteLine("Enter the output file name for the addition result");
             string outputAdditionFile = Console.ReadLine();
 
-            Console.WriteLine("Enter the output file name for the multiplication result (e.g., prussell_p4_outM12.txt): ");
+            Console.WriteLine("Enter the output file name for the multiplication result");
             string outputMultiplicationFile = Console.ReadLine();
 
             PerformMatrixOperations(matrixFile1, matrixFile2, outputAdditionFile, outputMultiplicationFile);

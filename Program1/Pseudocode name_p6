@@ -1,4 +1,0 @@
-1. Read the matrices from the specified files.
-2. Calculate the transpose of each matrix.
-3. Save the transposed matrices to separate files.
-4. Display a message indicating the transposition is complete.

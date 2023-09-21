@@ -1,0 +1,5 @@
+1. Prompt the user for the names of the input vectors.
+2. Read the input vectors.
+3. Calculate the dot product of the vectors.
+4. Save the dot product to a file.
+5. Display a message indicating the dot product is calculated.

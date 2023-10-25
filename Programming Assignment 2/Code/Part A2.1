@@ -1,0 +1,88 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Define the encoding matrix A
+        double[,] A = new double[,]
+        {
+            { 1, -1, -1, 1 },
+            { 2, -3, -5, 4 },
+            { -2, -1, -2, 2 },
+            { 3, -3, -1, 2 }
+        };
+
+        // Input the message
+        Console.Write("Enter the message to be encrypted: ");
+        string message = Console.ReadLine();
+
+        // Convert the message to a plaintext matrix
+        double[,] plaintextMatrix = MessageToPlaintextMatrix(message);
+
+        // Encrypt the message
+        double[,] cipherMatrix = EncryptMessage(plaintextMatrix, A);
+
+        // Print the plaintext matrix and the cipher matrix
+        Console.WriteLine("Plaintext Matrix (B):");
+        PrintMatrix(plaintextMatrix);
+        Console.WriteLine("Cipher Matrix (C):");
+        PrintMatrix(cipherMatrix);
+    }
+
+    static double[,] MessageToPlaintextMatrix(string message)
+    {
+        int n = message.Length;
+        int columns = (int)Math.Ceiling(n / 4.0) * 4;
+        double[,] plaintextMatrix = new double[columns, 4];
+
+        for (int i = 0; i < n; i++)
+        {
+            int hexValue = (int)message[i];
+            plaintextMatrix[i, 0] = hexValue;
+        }
+
+        // Pad with zeros to create column vectors of 4 elements
+        for (int i = n; i < columns; i++)
+        {
+            plaintextMatrix[i, 0] = 0;
+        }
+
+        return plaintextMatrix;
+    }
+
+    static double[,] EncryptMessage(double[,] plaintextMatrix, double[,] A)
+    {
+        int rows = plaintextMatrix.GetLength(0);
+        int columns = A.GetLength(1);
+        double[,] cipherMatrix = new double[rows, columns];
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                for (int k = 0; k < plaintextMatrix.GetLength(1); k++)
+                {
+                    cipherMatrix[i, j] += plaintextMatrix[i, k] * A[k, j];
+                }
+            }
+        }
+
+        return cipherMatrix;
+    }
+
+    static void PrintMatrix(double[,] matrix)
+    {
+        int rows = matrix.GetLength(0);
+        int columns = matrix.GetLength(1);
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                Console.Write(matrix[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}

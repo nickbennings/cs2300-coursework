@@ -4,10 +4,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Input the augmented matrix (assuming it's read from a file or provided as input)
+        // Input the augmented matrix 
         double[,] augmentedMatrix = ReadAugmentedMatrixFromFile("augmented_matrix.txt");
 
-        // Solve the system using Gauss-Jordan elimination
+        // Solve the system using elimination
         double[] solutions = SolveWithGaussJordan(augmentedMatrix);
 
         // Print the solutions
@@ -21,7 +21,6 @@ class Program
         int m = matrix.GetLength(1) - 1;
         double[] solutions = new double[n];
 
-        // Perform Gauss-Jordan elimination
         for (int i = 0; i < n; i++)
         {
             double pivot = matrix[i, i];
@@ -53,9 +52,7 @@ class Program
 
     static double[,] ReadAugmentedMatrixFromFile(string filename)
     {
-        // Read the augmented matrix from a file (you should implement this)
-        // Example code to read from a file:
-        // ...
+       
         throw new NotImplementedException("Implement reading from a file");
     }
 

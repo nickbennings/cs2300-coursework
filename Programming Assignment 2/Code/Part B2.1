@@ -1,0 +1,72 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Enter Flow 1: ");
+        double flow1 = double.Parse(Console.ReadLine());
+
+        Console.Write("Enter Flow 2: ");
+        double flow2 = double.Parse(Console.ReadLine());
+
+        Console.Write("Enter Flow 3: ");
+        double flow3 = double.Parse(Console.ReadLine());
+
+        Console.Write("Enter Flow 4: ");
+        double flow4 = double.Parse(Console.ReadLine());
+
+        // Create the augmented matrix
+        double[,] augmentedMatrix = CreateAugmentedMatrix(flow1, flow2, flow3, flow4);
+
+        // Print the augmented matrix
+        Console.WriteLine("Augmented Matrix:");
+        PrintMatrix(augmentedMatrix);
+    }
+
+    static double[,] CreateAugmentedMatrix(double flow1, double flow2, double flow3, double flow4)
+    {
+        // Define the coefficients and constants
+        double[,] coefficients = new double[,]
+        {
+            { 1, 0, 0, 0 },
+            { 0, 1, 0, 0 },
+            { 0, 0, 1, 0 },
+            { 0, 0, 0, 1 }
+        };
+
+        double[] constants = new double[] { flow1, flow2, flow3, flow4 };
+
+        // Create the augmented matrix by combining coefficients and constants
+        int n = coefficients.GetLength(0);
+        int m = coefficients.GetLength(1);
+        double[,] augmentedMatrix = new double[n, m + 1];
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                augmentedMatrix[i, j] = coefficients[i, j];
+            }
+
+            augmentedMatrix[i, m] = constants[i];
+        }
+
+        return augmentedMatrix;
+    }
+
+    static void PrintMatrix(double[,] matrix)
+    {
+        int n = matrix.GetLength(0);
+        int m = matrix.GetLength(1);
+
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < m; j++)
+            {
+                Console.Write(matrix[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}

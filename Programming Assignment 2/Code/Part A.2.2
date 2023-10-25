@@ -1,0 +1,74 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Define the decoding matrix A_inverse
+        double[,] A_inverse = new double[,]
+        {
+            { 1, 1, -2, -3 },
+            { 2, 3, -4, -3 },
+            { 1, 0, -2, -1 },
+            { 1, -1, 2, 2 }
+        };
+
+        // Input the cipher matrix (assuming it's read from a file or provided)
+        double[,] cipherMatrix = ReadCipherMatrixFromFile("cipher_matrix.txt");
+
+        // Decrypt the message
+        double[,] plaintextMatrix = DecryptMessage(cipherMatrix, A_inverse);
+
+        // Convert the plaintext matrix back to characters
+        string message = PlaintextMatrixToMessage(plaintextMatrix);
+
+        // Print the original plaintext message
+        Console.WriteLine("Decrypted Message:");
+        Console.WriteLine(message);
+    }
+
+    static double[,] DecryptMessage(double[,] cipherMatrix, double[,] A_inverse)
+    {
+        int rows = cipherMatrix.GetLength(0);
+        int columns = A_inverse.GetLength(1);
+        double[,] plaintextMatrix = new double[rows, columns];
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                for (int k = 0; k < cipherMatrix.GetLength(1); k++)
+                {
+                    plaintextMatrix[i, j] += cipherMatrix[i, k] * A_inverse[k, j];
+                }
+            }
+        }
+
+        return plaintextMatrix;
+    }
+
+    static string PlaintextMatrixToMessage(double[,] plaintextMatrix)
+    {
+        int n = plaintextMatrix.GetLength(0);
+        string message = "";
+
+        for (int i = 0; i < n; i++)
+        {
+            int hexValue = (int)plaintextMatrix[i, 0];
+            if (hexValue != 0)
+            {
+                message += (char)hexValue;
+            }
+        }
+
+        return message;
+    }
+
+    static double[,] ReadCipherMatrixFromFile(string filename)
+    {
+        // Read the cipher matrix from a file (you should implement this)
+        // Example code to read from a file:
+        // ...
+        throw new NotImplementedException("Implement reading from a file");
+    }
+}

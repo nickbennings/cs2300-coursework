@@ -1,0 +1,14 @@
+Question #1:
+Why does this plaintext matrix have to be made up of column vectors of 4 elements?
+
+Answer #1: 
+The plaintext matrix in the provided encryption method is structured as column vectors of 4 elements mostly for simplicity and consistency. There are several reasons for 
+this, the first being Matrix Multiplication. The encryption process involves multiplying the plaintext matrix with a specific encoding matrix (A). To perform this matrix
+multiplication, the plaintext matrix needs to have a consistent number of columns that matches the number of rows in the encoding matrix (A). Next there is Padding. When 
+coding a message, it's sometimes likely that the number of characters in the message is not a multiple of 4. To handle this, padding with zeros isused to complete the last
+column vector. This ensures that the plaintext matrix maintains its 4-column structure. Simplicity is a reason as well since using a fixed column size simplifies the encryption
+and decryption process. It provides a clear and consistent structure for both encoding and decoding, making the algorithm more straightforward. Lastly uniformity is also obtained
+when using 4-element column vectors too. Each part of the message can be consistently mapped to a corresponding element in the plaintext matrix. This uniformity simplifies the 
+mapping process from characters to numeric values and back. In summary, using column vectors of 4 elements in the plaintext matrix ensures that the encryption and decryption process
+is well-defined, consistent, and compatible with the chosen encoding matrix. It provides a clear structure for handling messages of different lengths while maintaining the integrity
+of the encryption algorithm.

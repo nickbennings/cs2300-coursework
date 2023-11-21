@@ -1,0 +1,13 @@
+Part 1 - Leontief Input-Output Model
+
+Read input matrix D from a file
+Read external demand matrix E from a file
+
+Compute matrix (I - D)
+Compute the inverse of (I - D) using Gauss-Jordan elimination
+
+Multiply the inverse matrix by the external demand matrix to get the output matrix X
+
+Round each element of the output matrix to the nearest tenth
+
+Print the output matrix X

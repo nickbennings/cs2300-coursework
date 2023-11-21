@@ -1,0 +1,23 @@
+Part 2 - Least Squares Regression Analysis
+
+Read data points (x, y) from a file
+
+Create a matrix X with the first column as 1 (constant term) and the second column as x values
+
+Create a matrix Y with the y values
+
+Transpose matrix X
+
+Multiply transposed X by X to get X^T * X
+
+Compute the inverse of X^T * X
+
+Multiply the inverse by X^T
+
+Multiply the result by Y to get matrix A
+
+Round the elements of matrix A to the nearest tenth
+
+Print the least squares regression line equation: Y = A[0,0] + A[1,0] * x
+
+Export data points and the regression line equation to a CSV file for external plotting

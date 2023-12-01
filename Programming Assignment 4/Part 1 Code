@@ -1,0 +1,169 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        Part1();
+    }
+
+    /// Part 1
+    static void Part1()
+    {
+        var inputFilename1 = "input1.txt";
+        var outputFilename1 = "output1_subpart1.txt";
+        Part1_Subpart1(inputFilename1, outputFilename1);
+
+        var inputFilename2 = "input1.txt";
+        var outputFilename2 = "output1_subpart2.txt";
+        Part1_Subpart2(inputFilename2, outputFilename2);
+    }
+
+    /// Part 1 - Subpart 1
+
+
+    /// Compute the distance between a point and a plane defined by a normal vector and a point on the plane.
+
+    static double DistanceToPlane(List<double> planePoint, List<double> planeNormal, List<double> point)
+    {
+        var planePointArray = planePoint.ToArray();
+        var planeNormalArray = planeNormal.ToArray();
+        var pointArray = point.ToArray();
+
+        var planeNormalUnit = Normalize(planeNormalArray);
+        var distance = DotProduct(planeNormalUnit, Subtract(pointArray, planePointArray));
+
+        return distance;
+    }
+
+
+    /// Compute and write the distance between a point and a plane for each line in the input file.
+
+    static void Part1_Subpart1(string inputFilename, string outputFilename)
+    {
+        var lines = File.ReadLines(inputFilename);
+
+        using (var writer = new StreamWriter(outputFilename))
+        {
+            foreach (var line in lines)
+            {
+                var values = line.Split().Select(double.Parse).ToList();
+                var planePoint = values.GetRange(0, 3);
+                var planeNormal = values.GetRange(3, 3);
+                var point = values.GetRange(6, 3);
+
+                var distance = DistanceToPlane(planePoint, planeNormal, point);
+                writer.WriteLine($"{distance:.0000}");
+            }
+        }
+    }
+
+    /// Part 1 - Subpart 2
+
+ 
+    /// Compute the intersection point between a line and a triangle in 3D space.
+
+    static List<double> LineTriangleIntersection(List<double> lineStart, List<double> lineEnd, List<double> triangleVertices)
+    {
+        /// Implementation of the line-triangle intersection algorithm
+
+
+        return null; 
+    }
+
+
+    /// Compute and write the intersection points between a line and each triangle in the input file.
+
+    static void Part1_Subpart2(string inputFilename, string outputFilename)
+    {
+        var lines = File.ReadLines(inputFilename).Skip(1);
+
+        var lineStart = lines.First().Split().Take(3).Select(double.Parse).ToList();
+        var lineEnd = lines.First().Split().Skip(3).Select(double.Parse).ToList();
+
+        using (var writer = new StreamWriter(outputFilename))
+        {
+            foreach (var line in lines.Skip(1))
+            {
+                var triangleVertices = line.Split().Select(double.Parse).ToList();
+                var intersectionPoint = LineTriangleIntersection(lineStart, lineEnd, triangleVertices);
+
+                if (intersectionPoint != null)
+                {
+                    writer.WriteLine($"{intersectionPoint[0]:.0000} {intersectionPoint[1]:.0000} {intersectionPoint[2]:.0000}");
+                }
+                else
+                {
+                    writer.WriteLine("Does not intersect.");
+                }
+            }
+        }
+    }
+
+    /// Helper functions
+
+
+    /// Normalize a vector.
+
+    static double[] Normalize(double[] vector)
+    {
+        var magnitude = Math.Sqrt(vector.Sum(x => x * x));
+        return vector.Select(x => x / magnitude).ToArray();
+    }
+
+
+    /// Calculate the product of a scalar and a vector.
+
+    static double[] Multiply(double scalar, double[] vector)
+    {
+        return vector.Select(x => x * scalar).ToArray();
+    }
+
+
+    /// Compute the dot product of two vectors.
+
+    static double DotProduct(double[] a, double[] b)
+    {
+        return a.Zip(b, (x, y) => x * y).Sum();
+    }
+
+
+    /// Subtract one vector from another.
+
+    static double[] Subtract(double[] a, double[] b)
+    {
+        return a.Zip(b, (x, y) => x - y).ToArray();
+    }
+
+
+    /// Compute the cross product of two vectors.
+
+    static double[] CrossProduct(double[] a, double[] b)
+    {
+        return new[]
+        {
+            a[1] * b[2] - a[2] * b[1],
+            a[2] * b[0] - a[0] * b[2],
+            a[0] * b[1] - a[1] * b[0]
+        };
+    }
+
+ 
+    /// Add two vectors.
+
+    static double[] Add(double[] a, double[] b)
+    {
+        return a.Zip(b, (x, y) => x + y).ToArray();
+    }
+
+  
+    /// Extract a subarray from an array.
+
+    static double[] Subarray(double[] array, int startIndex, int length)
+    {
+        return array.Skip(startIndex).Take(length).ToArray();
+    }
+}

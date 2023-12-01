@@ -13,9 +13,8 @@ Eigenvalues and eigenvectors are computed using the Accord.NET library.
 
 3. Output Generation:
 The program outputs the eigenvector for the webpages and the ranking of webpages from highest to lowest importance.
+The program outputs "Invalid input" if the input matrix is not valid.
 
 Resources and Libraries: 
 The Accord.NET library is used for the eigenvalue decomposition.
 
-Notes
-The program outputs "Invalid input" if the input matrix is not valid.

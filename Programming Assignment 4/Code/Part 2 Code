@@ -24,34 +24,34 @@ class Program
   
     static void Part2_PageRank(string inputFilename)
     {
-        /// Read the matrix from the input file
+        /// Read the matrix from the input file.
         var matrix = File.ReadLines(inputFilename)
             .Select(line => line.Split().Select(double.Parse).ToArray())
             .ToArray();
 
-        /// Check if the matrix is valid
+        /// Check if the matrix is valid.
         if (matrix.Any(row => row.Any(element => element < 0)) || !matrix.All(row => Math.Abs(row.Sum() - 1) < 1e-6))
         {
             Console.WriteLine("Invalid input");
             return;
         }
 
-        /// Transpose the matrix for eigenvalue decomposition
+        /// Transpose the matrix for eigenvalue decomposition.
         var transposedMatrix = Transpose(matrix);
 
-        /// Calculate eigenvalues and eigenvectors
+        /// Calculate eigenvalues and eigenvectors.
         var eigenvalues = Eigenvalues(transposedMatrix);
         var eigenvectors = Eigenvectors(transposedMatrix, eigenvalues);
 
-        /// Get the stationary distribution vector
+        /// Get the stationary distribution vector.
         var stationaryDistribution = Normalize(eigenvectors[0]);
 
-        /// Get the indices sorted by rank
+        /// Get the indices sorted by rank.
         var sortedIndices = Enumerable.Range(0, stationaryDistribution.Length)
             .OrderByDescending(i => stationaryDistribution[i])
             .ToArray();
 
-        /// Output the results
+        /// Output the results.
         Console.WriteLine("Stationary Distribution:");
         Console.WriteLine(string.Join(" ", stationaryDistribution.Select(val => $"{val:.0000}")));
 

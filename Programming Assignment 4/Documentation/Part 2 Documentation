@@ -1,21 +1,21 @@
 Program Description:
-For part two this program implements the Google PageRank algorithm based on a stochastic matrix. The input is an N x N matrix representing the connectivity between webpages.
+For part two this program implements the Google PageRank algorithm based on a stochastic matrix. The input is an N x N matrix representing the connection between webpages.
 The program outputs the eigenvector for the webpages and a ranking of webpages based on their importance.
 
 Approach: 
 1. Matrix Processing:
-The program reads the input matrix, ensuring it is stochastic (columns sum to one) and contains non-negative elements.
+The program reads the input matrix, ensuring it is stochastic and contains non-negative elements.
 It checks for invalid input and outputs an error message if needed.
 
 2. Power Method:
-The power method is employed to find the eigenvector corresponding to the dominant eigenvalue.
+The power method is used to find the eigenvector corresponding to the dominant eigenvalue.
 Eigenvalues and eigenvectors are computed using the Accord.NET library.
 
 3. Output Generation:
 The program outputs the eigenvector for the webpages and the ranking of webpages from highest to lowest importance.
 
 Resources and Libraries: 
-The Accord.NET library is used for eigenvalue decomposition.
+The Accord.NET library is used for the eigenvalue decomposition.
 
 Notes
 The program outputs "Invalid input" if the input matrix is not valid.

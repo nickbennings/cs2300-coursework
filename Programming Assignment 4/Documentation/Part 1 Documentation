@@ -1,6 +1,6 @@
 Program Description:
 The Part 1 program operates on points, lines, and planes. It processes input data that defines planes and points, computing the distance between each point and its corresponding plane. 
-Also, it checks for intersections between a given line and a set of triangles in 3D space.
+Also, it checks for intersections between a given line and a set of triangles in 3D-space.
 
 Approach:
 1. Distance Calculation:
@@ -9,9 +9,9 @@ The plane is defined by a point on the plane, the normal vector, and the coordin
 The distance calculation involves dot products and vector normalization.
 
 2. Intersection Checking:
-The program determines if a line intersects with a triangle in 3D space.
+The program determines if a line intersects with a triangle in 3D-space.
 It goes through the vertices of each triangle and checks for intersections using vector operations.
 If an intersection is found, the program outputs the coordinates of the intersection point; otherwise, it outputs "Does not intersect."
 
 Resources and Libraries:
-This program was implemented from scratch using basic linear algebra operations in C# so no external libraries were used.
+No external libraries were used.

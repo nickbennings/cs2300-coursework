@@ -25,7 +25,7 @@ class Program
     /// Part 1 - Subpart 1
 
 
-    /// Compute the distance between a point and a plane defined by a normal vector and a point on the plane.
+    /// Computes the distance between a point and a plane defined by a normal vector and a point on the plane.
 
     static double DistanceToPlane(List<double> planePoint, List<double> planeNormal, List<double> point)
     {
@@ -40,7 +40,7 @@ class Program
     }
 
 
-    /// Compute and write the distance between a point and a plane for each line in the input file.
+    /// Computes and writes the distance between a point and a plane for each line in the input file.
 
     static void Part1_Subpart1(string inputFilename, string outputFilename)
     {
@@ -64,7 +64,7 @@ class Program
     /// Part 1 - Subpart 2
 
  
-    /// Compute the intersection point between a line and a triangle in 3D space.
+    /// Computes the intersection point between a line and a triangle in 3D space.
 
     static List<double> LineTriangleIntersection(List<double> lineStart, List<double> lineEnd, List<double> triangleVertices)
     {
@@ -75,7 +75,7 @@ class Program
     }
 
 
-    /// Compute and write the intersection points between a line and each triangle in the input file.
+    /// Computes and write the intersection points between a line and each triangle in the input file.
 
     static void Part1_Subpart2(string inputFilename, string outputFilename)
     {
@@ -139,7 +139,7 @@ class Program
     }
 
 
-    /// Compute the cross product of two vectors.
+    /// Computes the cross product of two vectors.
 
     static double[] CrossProduct(double[] a, double[] b)
     {
